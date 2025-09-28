@@ -8,7 +8,8 @@
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
-    "build": "echo \"No build step defined\""
+    "build": "echo \"No build step defined\"",
+    "deploy": "git add .. && git commit -m 'update' && git push"
   },
   "dependencies": {
     "express": "^5.1.0"

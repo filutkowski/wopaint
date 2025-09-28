@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>WoPaint</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; display: flex; justify-content:  center; width: 100vw; height: 100vh; flex-direction: column;}
+    #cookie-banner {
+
+      background: #222;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9999;
+      height: 250px;
+    }
+    button {
+      margin-left: 10px;
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+    }
+    .accept { background: #4caf50; color: white; }
+    .decline { background: #f44336; color: white; }
+    select {
+      margin-right: 20px;
+      padding: 6px;
+      background: #333;
+      color: white;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="cookie-banner">
+    <div>
+      <select id="lang" onchange="setLanguage(this.value)">
+        <option value="pl">Polski</option>
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+        <option value="de">Deutsch</option>
+      </select>
+      <span id="cookie-text">Ta strona używa ciasteczek i localStorage. Czy akceptujesz?</span>
+    </div>
+    <div>
+      <button class="accept" id="accept-btn" onclick="acceptCookies()">Tak</button>
+      <button class="decline" id="decline-btn" onclick="declineCookies()">Nie</button>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      pl: {
+        text: "Ta strona używa ciasteczek i localStorage. Czy akceptujesz?",
+        accept: "Tak",
+        decline: "Nie",
+        confirm: "Bez zgody strona nie będzie działać. Czy na pewno chcesz ją zamknąć?",
+        closed: "Strona została zamknięta z powodu braku zgody."
+      },
+      en: {
+        text: "This site uses cookies and localStorage. Do you accept?",
+        accept: "Yes",
+        decline: "No",
+        confirm: "Without consent, the site won't work. Are you sure you want to close it?",
+        closed: "The site has been closed due to lack of consent."
+      },
+      ru: {
+        text: "Этот сайт использует cookies и localStorage. Вы принимаете?",
+        accept: "Да",
+        decline: "Нет",
+        confirm: "Без согласия сайт не будет работать. Вы уверены, что хотите закрыть?",
+        closed: "Сайт был закрыт из-за отсутствия согласия."
+      },
+      de: {
+        text: "Diese Website verwendet Cookies und localStorage. Akzeptieren Sie?",
+        accept: "Ja",
+        decline: "Nein",
+        confirm: "Ohne Zustimmung funktioniert die Seite nicht. Möchten Sie sie wirklich schließen?",
+        closed: "Die Seite wurde wegen fehlender Zustimmung geschlossen."
+      }
+    };
+
+    function setLanguage(lang) {
+      const t = translations[lang];
+      document.getElementById('cookie-text').textContent = t.text;
+      document.getElementById('accept-btn').textContent = t.accept;
+      document.getElementById('decline-btn').textContent = t.decline;
+      localStorage.setItem('lang', lang);
+    }
+
+    function acceptCookies() {
+      localStorage.setItem('cookies', 'true');
+      document.getElementById('cookie-banner').style.display = 'none';
+      window.location.href = '/';
+    }
+
+    function declineCookies() {
+      const lang = localStorage.getItem('lang') || 'pl';
+      const confirmExit = confirm(translations[lang].confirm);
+      if (confirmExit) {
+        localStorage.setItem('cookies', 'false');
+        window.close();
+        document.body.innerHTML = `<h1>${translations[lang].closed}</h1>`;
+      }
+    }
+
+    // Auto-hide if already accepted
+    if (localStorage.getItem('cookies') === 'true') {
+      document.getElementById('cookie-banner').style.display = 'none';
+      window.location.href = '/';
+    }
+
+    // Load saved language
+    const savedLang = localStorage.getItem('lang') || 'pl';
+    document.getElementById('lang').value = savedLang;
+    setLanguage(savedLang);
+  </script>
+</body>
+</html>

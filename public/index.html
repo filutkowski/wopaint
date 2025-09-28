@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>WoPaint - Create open-source </title>
 </head>
 <body>
-    
+    <script>
+        if ('showOpenFilePicker' in window && 'showSaveFilePicker' in window) {
+  windows.location.href = "/cookies.html";
+} else {
+  window.location.href = "/browser-no-support.html";
+}
+    </script>
 </body>
 </html>

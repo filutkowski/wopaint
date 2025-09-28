@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Nieobsługiwana przeglądarka</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+      padding: 50px;
+    }
+    .box {
+      background: #fff0f0;
+      border: 1px solid #ff4d4d;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 500px;
+    }
+    select {
+      margin-top: 20px;
+      padding: 5px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2 id="title">Twoja przeglądarka nie obsługuje File System Access API</h2>
+    <p id="message">Użyj Chrome, Edge lub Opera, aby korzystać z pełnej funkcjonalności.</p>
+    <select id="language">
+      <option value="pl">Polski</option>
+      <option value="en">English</option>
+      <option value="ru">Русский</option>
+      <option value="de">Deutsch</option>
+    </select>
+  </div>
+
+  <script>
+    const translations = {
+      pl: {
+        title: "Twoja przeglądarka nie obsługuje File System Access API",
+        message: "Użyj Chrome, Edge lub Opera, aby korzystać z pełnej funkcjonalności."
+      },
+      en: {
+        title: "Your browser does not support the File System Access API",
+        message: "Use Chrome, Edge or Opera to access full functionality."
+      },
+      ru: {
+        title: "Ваш браузер не поддерживает File System Access API",
+        message: "Используйте Chrome, Edge или Opera для полной функциональности."
+      },
+      de: {
+        title: "Ihr Browser unterstützt das File System Access API nicht",
+        message: "Verwenden Sie Chrome, Edge oder Opera für den vollen Funktionsumfang."
+      }
+    };
+
+    const select = document.getElementById("language");
+    const title = document.getElementById("title");
+    const message = document.getElementById("message");
+
+    select.addEventListener("change", () => {
+      const lang = select.value;
+      title.textContent = translations[lang].title;
+      message.textContent = translations[lang].message;
+    });
+  </script>
+</body>
+</html>
